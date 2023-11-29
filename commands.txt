@@ -1,0 +1,42 @@
+# sudo
+enable
+# config
+conf t
+# machine name
+hostname R1
+# no DNS
+no ip domain-lookup
+# password for enable
+enable secret class
+# wrong password MOTD
+banner motd #
+Unauthorized access is strictly prohibited. #
+# password for console
+line con 0
+password cisco
+login
+exit
+# password for ssh
+line vty 0 4
+password cisco
+login
+exit
+# setup interfaces
+interface f0/0
+ip address 192.168.0.1 255.255.255.0
+no shut
+exit
+# password encryption
+service password-encryption
+# clock
+show clock
+clock set 12:12:00 29 november 2023
+# interface definition
+interface f0/0
+description Connection to PC-A
+exit
+# save config
+copy run start
+# erase config
+erase startup-config
+reload
