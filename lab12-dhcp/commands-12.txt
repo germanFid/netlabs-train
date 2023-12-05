@@ -1,0 +1,49 @@
+S1 config:          !
+    dont touch?
+
+R1 config:          !
+interface f0/0: 
+    ipv4 address:   192.168.0.1 
+    subnet mask:    255.255.255.0 
+interface f0/1: 
+    ipv4 address:   192.168.1.1 
+    subnet mask:    255.255.255.0 
+commands:
+######
+erase startup-config
+reload
+#
+enable
+conf t
+hostname R1
+no ip domain-lookup
+enable secret class
+banner motd #
+Unauthorized access is strictly prohibited. #
+line con 0
+password cisco
+login
+exit
+line vty 0 4
+password cisco
+login
+exit
+interface f0/0
+ip address 192.168.0.1 255.255.255.0
+no shut
+exit
+service password-encryption
+interface f0/0
+description Connection to DHCP-translator
+exit
+exit
+copy run start
+#
+
+
+
+#
+erase startup-config
+reload
+#
+##########

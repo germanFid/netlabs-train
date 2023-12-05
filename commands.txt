@@ -40,3 +40,41 @@ copy run start
 # erase config
 erase startup-config
 reload
+# Настройка DHCPv4-сервера:
+ip dhcp excluded-address <адрес>
+ip dhcp pool <имя пула>
+network <адрес сети> <маска сети>
+default-router <адрес шлюза>
+# Настройка DHCPv4-ретранслятора:
+interface <имя интерфейса>
+ip helper-address <адрес DHCP-сервера>
+Настройка statefull DHCPv6-сервера:
+ipv6 dhcp pool <имя пула>
+address prefix <префикс диапазона>/<длина префикса>
+dns-server <адрес>
+exit
+interface <имя интерфейса>
+ipv6 dhcp server <имя пула>
+ipv6 nd managed-config-flag
+
+en
+configure terminal 
+hostname R1
+exit
+vlan database
+vlan 11 PC1
+vlan 12 PC2
+vlan 10 S1
+exit
+conf terminal
+interface f0/0.1
+encapsulation dot1q 10
+ip address 10.0.0.1 255.255.255.252
+exit
+interface f0/0.1
+encapsulation dot1q 11
+ip address 172.20.11.1 255.255.255.0
+exit
+interface f0/0.1
+encapsulation dot1q 12
+ip address 172.20.12.1 255.255.255.0
