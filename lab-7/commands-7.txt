@@ -1,0 +1,70 @@
+S1 config:          !
+    dont touch?
+
+R1 config:          !
+interface f0/0: 
+    ipv4 address:   192.168.0.1 
+    subnet mask:    255.255.255.224
+interface f0/1: 
+    ipv4 address:   192.168.0.33 
+    subnet mask:    255.255.255.224
+interface Loopback0
+    ipv4 address:   192.168.0.65
+    subnet mask:    255.255.255.224
+interface Loopback1
+    ipv4 address:   192.168.0.97
+    subnet mask:    255.255.255.224
+commands:
+######
+erase startup-config
+reload
+#
+enable
+conf t
+hostname R1
+no ip domain-lookup
+enable secret class
+banner motd #
+Unauthorized access is strictly prohibited. #
+line con 0
+password cisco
+login
+exit
+line vty 0 4
+password cisco
+login
+exit
+#
+interface f0/0
+ip address 192.168.0.1 255.255.255.224
+no shut
+exit
+
+interface f0/1
+ip address 192.168.0.33 255.255.255.224
+no shut
+exit
+
+interface Loopback0
+ip address 192.168.0.65 255.255.255.224
+no shut
+exit
+
+interface Loopback1
+ip address 192.168.0.97 255.255.255.224
+no shut
+exit
+
+service password-encryption
+
+exit
+copy run start
+#
+
+
+
+#
+erase startup-config
+reload
+#
+##########
